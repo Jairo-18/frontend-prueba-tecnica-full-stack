@@ -43,8 +43,12 @@ export default function LoginPage() {
       setTimeout(() => {
         window.location.href = '/';
       }, 2000);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unexpected error occurred');
+      }
     }
   };
 

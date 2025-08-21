@@ -151,7 +151,7 @@ export default function CasosDeExito() {
 
                       {/* Testimonial */}
                       <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-[#E7324A]">
-                        <p className="text-gray-700 italic mb-4">"{caso.testimonial}"</p>
+                        <p className="text-gray-700 italic mb-4">{`"${caso.testimonial}"`}</p>
 
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 bg-[#E7324A] rounded-full flex items-center justify-center text-white font-semibold">{caso.cliente.charAt(0)}</div>
