@@ -83,7 +83,7 @@ export default function LoginPage() {
                 </Label>
                 <div className="relative">
                   <Input id="password" type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className="border-gray-200 focus:border-[#E7324A] focus:ring-[#E7324A] h-12 pr-12" />
-                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#E7324A] transition-colors">
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#E7324A] transition-colors cursor-pointer">
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
                 </div>
@@ -92,25 +92,25 @@ export default function LoginPage() {
               {error && <p className="text-red-500 text-sm">{error}</p>}
               {success && <p className="text-green-500 text-sm">{success}</p>}
 
-              <Button type="submit" className="w-full h-12 bg-[#E7324A] hover:bg-[#E7344C] text-white font-semibold transition-all duration-200 transform hover:scale-[1.02]">
+              <Button type="submit" className="w-full h-12 bg-[#E7324A] hover:bg-[#E7344C] text-white font-semibold transition-all duration-200 transform hover:scale-[1.02] cursor-pointer">
                 Iniciar Sesión
               </Button>
             </form>
 
             <div className="text-center mt-4 text-sm text-gray-600">
               ¿No tienes una cuenta?{' '}
-              <Link href="/auth/register" className="text-[#E7324A] hover:text-[#F36DA3] font-semibold transition-colors">
+              <Link href="/auth/register" className="text-[#E7324A] hover:text-[#F36DA3] font-semibold transition-colors cursor-pointer">
                 Regístrate gratis
               </Link>
             </div>
 
             <div className="text-center mt-8 text-sm text-gray-500">
               Al iniciar sesión, aceptas nuestros{' '}
-              <Link href="/public/terms" className="text-[#E7324A] hover:underline">
+              <Link href="/public/terms" className="text-[#E7324A] hover:underline cursor-pointer">
                 Términos de Servicio
               </Link>{' '}
               y{' '}
-              <Link href="/public/privacy" className="text-[#E7324A] hover:underline">
+              <Link href="/public/privacy" className="text-[#E7324A] hover:underline cursor-pointer">
                 Política de Privacidad
               </Link>
             </div>

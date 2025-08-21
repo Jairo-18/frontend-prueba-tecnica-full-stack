@@ -47,7 +47,7 @@ export default function Navbar() {
     if (userData.role?.code === 'ADM') {
       return (
         <Link href="/admin/users">
-          <Button className="bg-[#E7324A] hover:bg-[#E7344C] text-white">Panel Administrativo</Button>
+          <Button className="bg-[#E7324A] hover:bg-[#E7344C] text-white cursor-pointer">Panel Administrativo</Button>
         </Link>
       );
     }
@@ -56,12 +56,12 @@ export default function Navbar() {
     return (
       <div className="flex space-x-2">
         <Link href="/user/brand">
-          <Button variant="outline" className="border-[#E7324A] text-[#E7324A] hover:bg-[#E7324A] hover:text-white bg-transparent">
+          <Button variant="outline" className="border-[#E7324A] text-[#E7324A] hover:bg-[#E7324A] hover:text-white bg-transparent cursor-pointer">
             Registar Marca
           </Button>
         </Link>
         <Link href="/user/brand-panel">
-          <Button className="bg-[#E7324A] hover:bg-[#E7344C] text-white">Ver Mis Marcas</Button>
+          <Button className="bg-[#E7324A] hover:bg-[#E7344C] text-white cursor-pointer">Ver Mis Marcas</Button>
         </Link>
       </div>
     );
@@ -102,19 +102,19 @@ export default function Navbar() {
             {userData ? (
               <>
                 <RoleButton userData={userData} />
-                <Button onClick={handleLogout} variant="outline" className="border-[#E7324A] text-[#E7324A] hover:bg-[#E7324A] hover:text-white bg-transparent">
+                <Button onClick={handleLogout} variant="outline" className="border-[#E7324A] text-[#E7324A] hover:bg-[#E7324A] hover:text-white bg-transparent cursor-pointer">
                   Cerrar Sesión
                 </Button>
               </>
             ) : (
               <>
                 <Link href="/auth/login">
-                  <Button variant="outline" className="border-[#E7324A] text-[#E7324A] hover:bg-[#E7324A] hover:text-white bg-transparent">
+                  <Button variant="outline" className="border-[#E7324A] text-[#E7324A] hover:bg-[#E7324A] hover:text-white bg-transparent cursor-pointer">
                     Iniciar Sesión
                   </Button>
                 </Link>
                 <Link href="/auth/login">
-                  <Button className="bg-[#E7324A] hover:bg-[#E7344C] text-white">Comenzar Gratis</Button>
+                  <Button className="bg-[#E7324A] hover:bg-[#E7344C] text-white cursor-pointer">Comenzar Gratis</Button>
                 </Link>
               </>
             )}
@@ -122,7 +122,7 @@ export default function Navbar() {
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <Button variant="ghost" size="sm" onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-[#0A0A0A]">
+            <Button variant="ghost" size="sm" onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-[#0A0A0A] cursor-pointer">
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </Button>
           </div>
@@ -149,19 +149,19 @@ export default function Navbar() {
                 {userData ? (
                   <>
                     <RoleButton userData={userData} />
-                    <Button onClick={handleLogout} variant="outline" className="border-[#E7324A] text-[#E7324A] hover:bg-[#E7324A] hover:text-white bg-transparent !w-full">
+                    <Button onClick={handleLogout} variant="outline" className="border-[#E7324A] text-[#E7324A] hover:bg-[#E7324A] hover:text-white bg-transparent !w-full cursor-pointer">
                       Cerrar Sesión
                     </Button>
                   </>
                 ) : (
                   <>
                     <Link href="/auth/login">
-                      <Button variant="outline" className="border-[#E7324A] text-[#E7324A] hover:bg-[#E7324A] hover:text-white bg-transparent !w-full">
+                      <Button variant="outline" className="border-[#E7324A] text-[#E7324A] hover:bg-[#E7324A] hover:text-white bg-transparent !w-full cursor-pointer">
                         Iniciar Sesión
                       </Button>
                     </Link>
                     <Link href="/auth/login">
-                      <Button className="bg-[#E7324A] hover:bg-[#E7344C] text-white !w-full">Comenzar Gratis</Button>
+                      <Button className="bg-[#E7324A] hover:bg-[#E7344C] text-white !w-full cursor-pointer">Comenzar Gratis</Button>
                     </Link>
                   </>
                 )}

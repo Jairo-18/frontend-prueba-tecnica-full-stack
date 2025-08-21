@@ -170,10 +170,10 @@ export default function ServiciosPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">¿No encuentras lo que buscas?</h2>
           <p className="text-xl text-gray-300 mb-8">Creamos soluciones personalizadas para cada cliente. Cuéntanos tu proyecto y diseñaremos una propuesta única.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-[#E7324A] hover:bg-[#E7344C] text-white">
+            <Button size="lg" className="bg-[#E7324A] hover:bg-[#E7344C] text-white cursor-pointer">
               Solicitar Propuesta Personalizada
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-[#0A0A0A] bg-transparent">
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-[#0A0A0A] bg-transparent cursor-pointer">
               Agendar Consulta
             </Button>
           </div>

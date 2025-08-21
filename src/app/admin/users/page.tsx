@@ -253,11 +253,11 @@ export default function AdminPanel() {
             <h1 className="text-xl font-semibold text-[#0A0A0A]">Panel Administrativo</h1>
             <div className="flex items-center space-x-2">
               <Link href="/admin/brand">
-                <Button variant="outline" className="border-[#E7324A] text-[#E7324A] hover:bg-[#E7324A] hover:text-white bg-transparent">
+                <Button variant="outline" className="border-[#E7324A] text-[#E7324A] hover:bg-[#E7324A] hover:text-white bg-transparent cursor-pointer">
                   Gestionar Marcas
                 </Button>
               </Link>
-              <Button className="bg-[#E7324A] hover:bg-[#E7344C] text-white" onClick={handleOpenAddDialog}>
+              <Button className="bg-[#E7324A] hover:bg-[#E7344C] text-white cursor-pointer" onClick={handleOpenAddDialog}>
                 <Plus className="h-4 w-4 mr-2" /> Agregar Usuario
               </Button>
             </div>
@@ -306,10 +306,10 @@ export default function AdminPanel() {
                     <TableCell>{getRoleName(user.role_type_id)}</TableCell>
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end space-x-2">
-                        <Button variant="outline" size="sm" onClick={() => handleEditUser(user.id)}>
+                        <Button variant="outline" size="sm" onClick={() => handleEditUser(user.id)} className="cursor-pointer">
                           <Edit className="h-4 w-4" />
                         </Button>
-                        <Button variant="outline" size="sm" onClick={() => handleDeleteUser(user.id)} className="text-red-600 hover:text-red-700">
+                        <Button variant="outline" size="sm" onClick={() => handleDeleteUser(user.id)} className="text-red-600 hover:text-red-700 cursor-pointer">
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
@@ -321,13 +321,13 @@ export default function AdminPanel() {
           </Table>
 
           <div className="flex justify-between items-center mt-4 px-4 py-2">
-            <Button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1} variant="outline">
+            <Button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1} variant="outline" className="cursor-pointer">
               Anterior
             </Button>
             <span className="text-sm text-gray-600">
               Página {currentPage} de {totalPages}
             </span>
-            <Button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages} variant="outline">
+            <Button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages} variant="outline" className="cursor-pointer">
               Siguiente
             </Button>
           </div>
@@ -369,10 +369,10 @@ export default function AdminPanel() {
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+            <Button variant="outline" onClick={() => setIsDialogOpen(false)} className="cursor-pointer">
               Cancelar
             </Button>
-            <Button className="bg-[#E7324A] hover:bg-[#E7344C] text-white" onClick={handleSaveUser}>
+            <Button className="bg-[#E7324A] hover:bg-[#E7344C] text-white cursor-pointer" onClick={handleSaveUser}>
               {editingUser ? 'Actualizar Usuario' : 'Agregar Usuario'}
             </Button>
           </DialogFooter>

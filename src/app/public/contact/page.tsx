@@ -69,7 +69,7 @@ export default function ContactPage() {
                 <Textarea id="message" placeholder="Cuéntanos más sobre tu proyecto..." rows={5} className="border-gray-300 focus:border-[#E7324A] focus:ring-[#E7324A]" />
               </div>
 
-              <Button className="w-full bg-[#E7324A] hover:bg-[#E7344C] text-white font-semibold py-3">
+              <Button className="w-full bg-[#E7324A] hover:bg-[#E7344C] text-white font-semibold py-3 cursor-pointer">
                 <Send className="w-4 h-4 mr-2" />
                 Enviar mensaje
               </Button>
@@ -135,7 +135,7 @@ export default function ContactPage() {
               <CardContent className="p-8 text-center">
                 <h3 className="text-2xl font-bold mb-4">¿Necesitas ayuda urgente?</h3>
                 <p className="mb-6 opacity-90">Para consultas urgentes o soporte técnico inmediato, contáctanos directamente.</p>
-                <Button variant="outline" className="bg-white text-[#E7324A] border-white hover:bg-gray-100">
+                <Button variant="outline" className="bg-white text-[#E7324A] border-white hover:bg-gray-100 cursor-pointer">
                   Llamar ahora
                 </Button>
               </CardContent>

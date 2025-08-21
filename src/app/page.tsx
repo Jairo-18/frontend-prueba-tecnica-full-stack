@@ -20,7 +20,7 @@ export default function HomePage() {
               <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">Gestiona, analiza y potencia tu marca con herramientas inteligentes que te ayudan a crear conexiones auténticas con tu audiencia.</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link href="/auth/login">
-                  <Button size="lg" className="bg-[#E7324A] hover:bg-[#E7344C] text-white px-8 py-3 text-lg">
+                  <Button size="lg" className="bg-[#E7324A] hover:bg-[#E7344C] text-white px-8 py-3 text-lg cursor-pointer">
                     Comenzar Gratis
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
@@ -113,7 +113,7 @@ export default function HomePage() {
             <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">Únete a miles de empresas que ya están potenciando sus marcas con BrandFlow. Comienza tu prueba gratuita hoy mismo.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link href="/auth/login">
-                <Button size="lg" className="bg-white text-[#E7324A] hover:bg-gray-100 px-8 py-3 text-lg font-semibold">
+                <Button size="lg" className="bg-white text-[#E7324A] hover:bg-gray-100 px-8 py-3 text-lg font-semibold cursor-pointer">
                   Comenzar Prueba Gratuita
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>

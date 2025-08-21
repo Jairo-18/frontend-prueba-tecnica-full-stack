@@ -93,14 +93,14 @@ export default function RegisterPage() {
               {error && <p className="text-red-500 text-sm">{error}</p>}
               {success && <p className="text-green-500 text-sm">{success}</p>}
 
-              <Button type="submit" className="w-full h-11 bg-[#E7324A] hover:bg-[#E7344C] text-white font-medium">
+              <Button type="submit" className="w-full h-11 bg-[#E7324A] hover:bg-[#E7344C] text-white font-medium cursor-pointer">
                 Crear cuenta
               </Button>
             </form>
 
             <div className="text-center text-sm text-gray-600">
               ¿Ya tienes cuenta?{' '}
-              <Link href="/auth/login" className="text-[#E7324A] hover:text-[#E7344C] font-medium">
+              <Link href="/auth/login" className="text-[#E7324A] hover:text-[#E7344C] font-medium cursor-pointer">
                 Iniciar sesión
               </Link>
             </div>

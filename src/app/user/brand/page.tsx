@@ -192,7 +192,7 @@ export default function TramitarMarca() {
         <div className="text-center">
           <p className="text-red-600 mb-4">Error: No se pudo cargar la información del usuario</p>
           <Link href="/auth/login">
-            <Button className="bg-[#E7324A] hover:bg-[#F36DA3] text-white">Ir al Login</Button>
+            <Button className="bg-[#E7324A] hover:bg-[#F36DA3] text-white cursor-pointer">Ir al Login</Button>
           </Link>
         </div>
       </div>
@@ -209,7 +209,7 @@ export default function TramitarMarca() {
         <div className="max-w-4xl mx-auto px-4 py-6">
           <div className="flex items-center gap-4">
             <Link href="/user/brand-panel">
-              <Button variant="ghost" size="sm" className="text-[#E7324A] hover:bg-[#E7324A] hover:text-white">
+              <Button variant="ghost" size="sm" className="text-[#E7324A] hover:bg-[#E7324A] hover:text-white cursor-pointer">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Ver Mis Marcas
               </Button>
@@ -367,18 +367,18 @@ export default function TramitarMarca() {
 
         {/* Navigation Buttons */}
         <div className="flex justify-between mt-8">
-          <Button variant="outline" onClick={handlePrevious} disabled={currentStep === 1} className="border-[#E7324A] text-[#E7324A] hover:bg-[#E7324A] hover:text-white bg-transparent">
+          <Button variant="outline" onClick={handlePrevious} disabled={currentStep === 1} className="border-[#E7324A] text-[#E7324A] hover:bg-[#E7324A] hover:text-white bg-transparent cursor-pointer">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Anterior
           </Button>
 
           {currentStep < 3 ? (
-            <Button onClick={handleNext} disabled={!isStepValid()} className="bg-[#E7324A] hover:bg-[#F36DA3] text-white">
+            <Button onClick={handleNext} disabled={!isStepValid()} className="bg-[#E7324A] hover:bg-[#F36DA3] text-white cursor-pointer">
               Siguiente
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           ) : (
-            <Button onClick={handleSubmit} disabled={loading || !currentUser} className="bg-gradient-to-r from-[#E7324A] to-[#F36DA3] hover:from-[#F36DA3] hover:to-[#E7324A] text-white px-8">
+            <Button onClick={handleSubmit} disabled={loading || !currentUser} className="bg-gradient-to-r from-[#E7324A] to-[#F36DA3] hover:from-[#F36DA3] hover:to-[#E7324A] text-white px-8 cursor-pointer">
               {loading ? (
                 <>
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
