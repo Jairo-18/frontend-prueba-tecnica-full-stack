@@ -120,7 +120,14 @@ export default function AdminPanel() {
     }
   };
 
-  const filteredUsers = users.filter((u) => (u.name || u.user).toLowerCase().includes(searchTerm.toLowerCase()) || u.email.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredUsers = users.filter((u) => {
+    const name = u.name || '';
+    const user = u.user || '';
+    const email = u.email || '';
+    const search = searchTerm || '';
+
+    return name.toLowerCase().includes(search.toLowerCase()) || user.toLowerCase().includes(search.toLowerCase()) || email.toLowerCase().includes(search.toLowerCase());
+  });
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] relative">
