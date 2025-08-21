@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -33,21 +33,23 @@ export default function LoginPage() {
       }
 
       const data = await res.json();
-      // Guardar token en localStorage
+
+      // 1️⃣ Guardar token
       localStorage.setItem('token', data.access_token);
 
-      // Mensaje de bienvenida
+      // 2️⃣ Guardar userData (rol + info del usuario)
+      localStorage.setItem('userData', JSON.stringify({ role: data.role, user: data.user }));
+
       setSuccess('¡Bienvenido! Redirigiendo...');
 
-      // Redirigir a home después de 2 segundos
       setTimeout(() => {
         window.location.href = '/';
-      }, 2000);
+      }, 1500);
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError('An unexpected error occurred');
+        setError('Ha ocurrido un error inesperado');
       }
     }
   };
@@ -55,11 +57,6 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <Link href="/" className="inline-flex items-center gap-2 text-[#0A0A0A] hover:text-[#E7324A] transition-colors mb-8">
-          <ArrowLeft className="w-4 h-4" />
-          Volver al inicio
-        </Link>
-
         <Card className="border-0 shadow-xl bg-white">
           <CardHeader className="text-center space-y-4 pb-8">
             <div className="mx-auto w-16 h-16 bg-gradient-to-br from-[#E7324A] to-[#F36DA3] rounded-2xl flex items-center justify-center">
@@ -104,6 +101,17 @@ export default function LoginPage() {
               ¿No tienes una cuenta?{' '}
               <Link href="/auth/register" className="text-[#E7324A] hover:text-[#F36DA3] font-semibold transition-colors">
                 Regístrate gratis
+              </Link>
+            </div>
+
+            <div className="text-center mt-8 text-sm text-gray-500">
+              Al iniciar sesión, aceptas nuestros{' '}
+              <Link href="/public/terms" className="text-[#E7324A] hover:underline">
+                Términos de Servicio
+              </Link>{' '}
+              y{' '}
+              <Link href="/public/privacy" className="text-[#E7324A] hover:underline">
+                Política de Privacidad
               </Link>
             </div>
           </CardContent>

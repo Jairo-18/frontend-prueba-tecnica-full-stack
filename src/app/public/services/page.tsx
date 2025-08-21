@@ -1,8 +1,7 @@
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Palette, Target, TrendingUp, Users, Megaphone, BarChart3, Lightbulb, CheckCircle } from 'lucide-react';
+import { Palette, Target, TrendingUp, Users, Megaphone, BarChart3, Lightbulb, CheckCircle } from 'lucide-react';
 
 export default function ServiciosPage() {
   const servicios = [
@@ -82,18 +81,6 @@ export default function ServiciosPage() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
-      {/* Header */}
-      <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center gap-4">
-            <Link href="/" className="flex items-center gap-2 text-[#0A0A0A] hover:text-[#E7324A] transition-colors">
-              <ArrowLeft className="h-5 w-5" />
-              <span>Volver al inicio</span>
-            </Link>
-          </div>
-        </div>
-      </div>
-
       {/* Hero Section */}
       <section className="py-16 bg-gradient-to-br from-[#E7324A] to-[#F36DA3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

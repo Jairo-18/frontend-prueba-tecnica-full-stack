@@ -1,6 +1,4 @@
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, Shield, Eye, Lock, Users } from 'lucide-react';
+import { Shield, Eye, Lock, Users } from 'lucide-react';
 
 export default function PrivacyPage() {
   return (
@@ -8,12 +6,6 @@ export default function PrivacyPage() {
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 py-6">
-          <Link href="/auth/login">
-            <Button variant="ghost" className="mb-4 text-[#0A0A0A] hover:bg-[#F36DA3]/10">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Volver al inicio
-            </Button>
-          </Link>
           <h1 className="text-3xl font-bold text-[#0A0A0A] mb-2">Política de Privacidad</h1>
           <p className="text-gray-600">Última actualización: Enero 2025</p>
         </div>

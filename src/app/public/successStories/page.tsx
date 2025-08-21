@@ -1,8 +1,6 @@
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, TrendingUp, Users, Award, Star } from 'lucide-react';
+import { TrendingUp, Users, Award, Star } from 'lucide-react';
 import Image from 'next/image';
 
 export default function CasosDeExito() {
@@ -60,15 +58,6 @@ export default function CasosDeExito() {
       {/* Header */}
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center gap-4 mb-6">
-            <Link href="/">
-              <Button variant="ghost" size="sm" className="text-[#0A0A0A] hover:bg-gray-100">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Volver al inicio
-              </Button>
-            </Link>
-          </div>
-
           <div className="text-center max-w-3xl mx-auto">
             <Badge className="bg-[#F36DA3] text-white hover:bg-[#F36DA3]/90 mb-4">Casos de Éxito</Badge>
             <h1 className="text-4xl md:text-5xl font-bold text-[#0A0A0A] mb-6">
