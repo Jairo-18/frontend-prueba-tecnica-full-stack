@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation';
 export default function TramitarMarca() {
   const [currentStep, setCurrentStep] = useState(1);
   const [brandData, setBrandData] = useState<BrandData>({
-    brand_id: 0,
+    id: 0,
     brand_title: '',
     state_type_id: 2,
     user_id: 0,
@@ -146,7 +146,7 @@ export default function TramitarMarca() {
       showMessage('¡Marca creada exitosamente! ✅');
       // Reset
       setBrandData({
-        brand_id: 0,
+        id: 0,
         brand_title: '',
         state_type_id: 2,
         user_id: currentUser.id,
