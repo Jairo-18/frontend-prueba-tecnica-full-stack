@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, TrendingUp, Users, Award, Star } from 'lucide-react';
+import Image from 'next/image';
 
 export default function CasosDeExito() {
   const casos = [
@@ -110,7 +111,7 @@ export default function CasosDeExito() {
                 <div className={`grid lg:grid-cols-2 gap-0 ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
                   {/* Imagen */}
                   <div className={`relative h-64 lg:h-auto ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
-                    <img src={caso.imagen || '/placeholder.svg'} alt={caso.empresa} className="w-full h-full object-cover" />
+                    <Image src={caso.imagen || '/placeholder.svg'} alt={caso.empresa} width={600} height={400} className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                   </div>
 
@@ -151,6 +152,7 @@ export default function CasosDeExito() {
                       {/* Testimonial */}
                       <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-[#E7324A]">
                         <p className="text-gray-700 italic mb-4">"{caso.testimonial}"</p>
+
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 bg-[#E7324A] rounded-full flex items-center justify-center text-white font-semibold">{caso.cliente.charAt(0)}</div>
                           <div>

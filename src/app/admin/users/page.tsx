@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -8,13 +8,14 @@ import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { ArrowLeft, Plus, Edit, Trash2, Search } from 'lucide-react';
+import { User } from '../interface/user.interface';
 
 export default function AdminPanel() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingUser, setEditingUser] = useState(null);
-  const [formUser, setFormUser] = useState({ fullName: '', username: '', email: '', password: '' });
+  const [editingUser, setEditingUser] = useState<number | null>(null);
+  const [formUser, setFormUser] = useState({ name: '', user: '', email: '', password: '' });
 
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(5);
@@ -22,55 +23,57 @@ export default function AdminPanel() {
 
   const [message, setMessage] = useState('');
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   const showMessage = (msg: string) => {
     setMessage(msg);
     setTimeout(() => setMessage(''), 3000);
   };
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       const skip = (currentPage - 1) * perPage;
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users?skip=${skip}&limit=${perPage}`, {
+      const res = await fetch(`${API_URL}/users?skip=${skip}&limit=${perPage}`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
+      if (!res.ok) throw new Error('Error al cargar usuarios');
       const data = await res.json();
-      const usersArray = Array.isArray(data) ? data : data.users || [];
+      const usersArray: User[] = Array.isArray(data) ? data : data.users || [];
       setUsers(usersArray);
-      setTotalPages(Math.ceil(usersArray.length / perPage) || 1);
+
+      const totalItems = data.total || usersArray.length;
+      setTotalPages(Math.ceil(totalItems / perPage) || 1);
     } catch (err) {
-      console.error('Error al traer usuarios', err);
+      console.error(err);
+      showMessage('Error al cargar usuarios ❌');
       setUsers([]);
     }
-  };
+  }, [currentPage, perPage, API_URL]);
 
   useEffect(() => {
     fetchUsers();
-  }, [currentPage]);
+  }, [fetchUsers]);
 
   const handleOpenAddDialog = () => {
     setEditingUser(null);
-    setFormUser({ fullName: '', username: '', email: '', password: '' });
+    setFormUser({ name: '', user: '', email: '', password: '' });
     setIsDialogOpen(true);
   };
 
   const handleEditUser = async (userId: number) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`, {
+      const res = await fetch(`${API_URL}/users/${userId}`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
-      const data = await res.json();
+      if (!res.ok) throw new Error('Error al cargar usuario');
+      const data: User = await res.json();
       setEditingUser(userId);
-      setFormUser({
-        fullName: data.fullName || '',
-        username: data.username || '',
-        email: data.email || '',
-        password: '',
-      });
+      setFormUser({ name: data.name, user: data.user, email: data.email, password: '' });
       setIsDialogOpen(true);
     } catch (err) {
-      console.error('Error al traer usuario', err);
+      console.error(err);
       showMessage('Error al cargar usuario ❌');
     }
   };
@@ -79,14 +82,14 @@ export default function AdminPanel() {
     const token = localStorage.getItem('token');
     try {
       if (editingUser) {
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${editingUser}`, {
+        await fetch(`${API_URL}/users/${editingUser}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
           body: JSON.stringify(formUser),
         });
         showMessage('Usuario actualizado correctamente ✅');
       } else {
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
+        await fetch(`${API_URL}/users`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
           body: JSON.stringify(formUser),
@@ -96,7 +99,7 @@ export default function AdminPanel() {
       setIsDialogOpen(false);
       fetchUsers();
     } catch (err) {
-      console.error('Error al guardar usuario', err);
+      console.error(err);
       showMessage('Error al guardar usuario ❌');
     }
   };
@@ -105,23 +108,22 @@ export default function AdminPanel() {
     if (!confirm('¿Seguro que quieres eliminar este usuario?')) return;
     const token = localStorage.getItem('token');
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`, {
+      await fetch(`${API_URL}/users/${userId}`, {
         method: 'DELETE',
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
       showMessage('Usuario eliminado correctamente ✅');
       fetchUsers();
     } catch (err) {
-      console.error('Error al eliminar usuario', err);
+      console.error(err);
       showMessage('Error al eliminar usuario ❌');
     }
   };
 
-  const filteredUsers = users.filter((u) => (u.fullName || u.username).toLowerCase().includes(searchTerm.toLowerCase()) || u.email.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredUsers = users.filter((u) => (u.name || u.user).toLowerCase().includes(searchTerm.toLowerCase()) || u.email.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] relative">
-      {/* Mensaje de notificación */}
       {message && <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow z-50">{message}</div>}
 
       {/* Header */}
@@ -135,19 +137,23 @@ export default function AdminPanel() {
               </Link>
               <h1 className="text-xl font-semibold text-[#0A0A0A]">Panel Administrativo</h1>
             </div>
-            <Link href="/admin/brand">
-              <Button className="bg-[#743742] hover:bg-[#E7344C] text-white">
-                <Plus className="h-4 w-4 mr-2" /> Gestionar Marcas
-              </Button>
-            </Link>
 
-            <Button className="bg-[#E7324A] hover:bg-[#E7344C] text-white" onClick={handleOpenAddDialog}>
-              <Plus className="h-4 w-4 mr-2" /> Agregar Usuario
-            </Button>
+            <div className="flex items-center space-x-2">
+              <Link href="/admin/brand">
+                <Button className="bg-[#743742] hover:bg-[#E7344C] text-white">
+                  <Plus className="h-4 w-4 mr-2" /> Gestionar Marcas
+                </Button>
+              </Link>
+
+              <Button className="bg-[#E7324A] hover:bg-[#E7344C] text-white" onClick={handleOpenAddDialog}>
+                <Plus className="h-4 w-4 mr-2" /> Agregar Usuario
+              </Button>
+            </div>
           </div>
         </div>
       </div>
 
+      {/* Table */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search */}
         <div className="flex items-center space-x-2 mb-6">
@@ -171,8 +177,8 @@ export default function AdminPanel() {
             <TableBody>
               {filteredUsers.map((user) => (
                 <TableRow key={user.id}>
-                  <TableCell>{user.fullName || user.username}</TableCell>
-                  <TableCell>{user.username}</TableCell>
+                  <TableCell>{user.name || user.user}</TableCell>
+                  <TableCell>{user.user}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end space-x-2">
@@ -188,23 +194,23 @@ export default function AdminPanel() {
               ))}
             </TableBody>
           </Table>
-        </div>
 
-        {/* Pagination */}
-        <div className="flex justify-between mt-4">
-          <Button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>
-            Anterior
-          </Button>
-          <span>
-            Página {currentPage} de {totalPages}
-          </span>
-          <Button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>
-            Siguiente
-          </Button>
+          {/* Pagination */}
+          <div className="flex justify-between mt-4">
+            <Button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>
+              Anterior
+            </Button>
+            <span>
+              Página {currentPage} de {totalPages}
+            </span>
+            <Button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>
+              Siguiente
+            </Button>
+          </div>
         </div>
       </div>
 
-      {/* Dialog para agregar/editar */}
+      {/* Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent>
           <DialogHeader>
@@ -213,11 +219,11 @@ export default function AdminPanel() {
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
               <Label>Nombre Completo</Label>
-              <Input value={formUser.fullName} onChange={(e) => setFormUser({ ...formUser, fullName: e.target.value })} />
+              <Input value={formUser.name} onChange={(e) => setFormUser({ ...formUser, name: e.target.value })} />
             </div>
             <div className="grid gap-2">
               <Label>Username</Label>
-              <Input value={formUser.username} onChange={(e) => setFormUser({ ...formUser, username: e.target.value })} />
+              <Input value={formUser.user} onChange={(e) => setFormUser({ ...formUser, user: e.target.value })} />
             </div>
             <div className="grid gap-2">
               <Label>Email</Label>
