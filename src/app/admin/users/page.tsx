@@ -15,7 +15,7 @@ export default function AdminPanel() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<number | null>(null);
-  const [formUser, setFormUser] = useState({ name: '', user: '', email: '', password: '' });
+  const [formUser, setFormUser] = useState({ fullName: '', username: '', email: '', password: '' });
 
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(5);
@@ -57,7 +57,7 @@ export default function AdminPanel() {
 
   const handleOpenAddDialog = () => {
     setEditingUser(null);
-    setFormUser({ name: '', user: '', email: '', password: '' });
+    setFormUser({ fullName: '', username: '', email: '', password: '' });
     setIsDialogOpen(true);
   };
 
@@ -70,7 +70,7 @@ export default function AdminPanel() {
       if (!res.ok) throw new Error('Error al cargar usuario');
       const data: User = await res.json();
       setEditingUser(userId);
-      setFormUser({ name: data.name, user: data.user, email: data.email, password: '' });
+      setFormUser({ fullName: data.fullName, username: data.username, email: data.email, password: '' });
       setIsDialogOpen(true);
     } catch (err) {
       console.error(err);
@@ -81,21 +81,26 @@ export default function AdminPanel() {
   const handleSaveUser = async () => {
     const token = localStorage.getItem('token');
     try {
+      const payload = editingUser
+        ? { fullName: formUser.fullName, username: formUser.username, email: formUser.email } // solo campos editables
+        : formUser; // al crear, enviar todo incluido password
+
       if (editingUser) {
         await fetch(`${API_URL}/users/${editingUser}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-          body: JSON.stringify(formUser),
+          body: JSON.stringify(payload),
         });
         showMessage('Usuario actualizado correctamente ✅');
       } else {
         await fetch(`${API_URL}/users`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-          body: JSON.stringify(formUser),
+          body: JSON.stringify(payload),
         });
         showMessage('Usuario agregado correctamente ✅');
       }
+
       setIsDialogOpen(false);
       fetchUsers();
     } catch (err) {
@@ -121,8 +126,8 @@ export default function AdminPanel() {
   };
 
   const filteredUsers = users.filter((u) => {
-    const name = u.name || '';
-    const user = u.user || '';
+    const name = u.fullName || '';
+    const user = u.username || '';
     const email = u.email || '';
     const search = searchTerm || '';
 
@@ -184,8 +189,8 @@ export default function AdminPanel() {
             <TableBody>
               {filteredUsers.map((user) => (
                 <TableRow key={user.id}>
-                  <TableCell>{user.name || user.user}</TableCell>
-                  <TableCell>{user.user}</TableCell>
+                  <TableCell>{user.fullName || user.username}</TableCell>
+                  <TableCell>{user.username}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end space-x-2">
@@ -226,20 +231,22 @@ export default function AdminPanel() {
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
               <Label>Nombre Completo</Label>
-              <Input value={formUser.name} onChange={(e) => setFormUser({ ...formUser, name: e.target.value })} />
+              <Input value={formUser.fullName} onChange={(e) => setFormUser({ ...formUser, fullName: e.target.value })} />
             </div>
             <div className="grid gap-2">
               <Label>Username</Label>
-              <Input value={formUser.user} onChange={(e) => setFormUser({ ...formUser, user: e.target.value })} />
+              <Input value={formUser.username} onChange={(e) => setFormUser({ ...formUser, username: e.target.value })} />
             </div>
             <div className="grid gap-2">
               <Label>Email</Label>
               <Input type="email" value={formUser.email} onChange={(e) => setFormUser({ ...formUser, email: e.target.value })} />
             </div>
-            <div className="grid gap-2">
-              <Label>Password</Label>
-              <Input type="password" value={formUser.password} onChange={(e) => setFormUser({ ...formUser, password: e.target.value })} />
-            </div>
+            {!editingUser && (
+              <div className="grid gap-2">
+                <Label>Password</Label>
+                <Input type="password" value={formUser.password} onChange={(e) => setFormUser({ ...formUser, password: e.target.value })} />
+              </div>
+            )}
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
