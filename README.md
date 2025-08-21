@@ -23,8 +23,8 @@ Incluye:
 1. Clonar el repositorio:
 
 ```bash
-git clone https://github.com/tuusuario/tu-frontend.git
-cd tu-frontend
+https://github.com/Jairo-18/frontend-prueba-tecnica-full-stack.git
+cd frontend-prueba-tecnica-full-stack
 
 2. Instalar dependencias
 
